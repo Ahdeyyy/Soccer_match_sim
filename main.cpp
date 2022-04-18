@@ -2,10 +2,11 @@
 //Date -> 17/04/22
 //Note -> my try at a football simulation the results are currently entirely randomized
 
-#include <random>
+//#include <random>
 #include <iostream>
 #include <stdio.h>
 #include "match_events.h"
+#include "team.h"
 
 #define HALF_TIME 45
 #define FULL_TIME 90
@@ -29,10 +30,16 @@ int main()
 	int away_goals = 0;
 	int home_goals = 0;
 	int time = 0;
+	team home = team("fc", "manchester", "of united");
+	team away = team("fc", "athletic", "bilbao");
 	teams in_possesion = HOME;
 	events current_event = PASS;
 
 	std::cout << "KICK OFF\n";
+	std::cout << "\n HOME TEAM XI\n";
+	home.display_players();
+	std::cout << "\n AWAY TEAM XI\n";
+	away.display_players();
 
 	while (time <= FULL_TIME)
 	{
@@ -202,7 +209,8 @@ int main()
 
 	}
 	std::cout << "\nFULL TIME \n";
-	std::cout << "\nHOME TEAM " << home_goals << " - " << away_goals << " AWAY TEAM \n";
+	//std::cout << "\nHOME TEAM " << home_goals << " - " << away_goals << " AWAY TEAM \n";
+	std::cout << home.display_name() + " " << home_goals << " - " << away_goals + " "<<away.display_name() << "\n";
 	//system("PAUSE");
 	return 0;
 }
