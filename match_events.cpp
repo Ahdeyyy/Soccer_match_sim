@@ -92,6 +92,10 @@ events match_events::new_event(events current_events, int prob)
 		{
 			return PASS;
 		}
+		else if (prob < 80)
+		{
+			return SKILL;
+		}
 		else if (prob < 100)
 		{
 			return SHOOT;
@@ -144,15 +148,15 @@ events match_events::new_event(events current_events, int prob)
 		}
 		//9
 	case SHOOT:
-		if (prob < 30)
+		if (prob < 20)
 		{
 			return BLOCK;
 		}
-		else if (prob < 75)
+		else if (prob < 55)
 		{
 			return SAVE;
 		}
-		else if (prob < 100)
+		else if (prob < 80)
 		{
 			return GOAL;
 		}

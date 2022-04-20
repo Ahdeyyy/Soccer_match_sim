@@ -1,30 +1,39 @@
 #pragma once
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include <random>
+#include <iostream>
 
-std::random_device r;
-std::default_random_engine e1(r());
-std::uniform_int_distribution<int> uniform_dist(0, 20);
 
 // contains the player struct- name e.t.c
-std::string first_names[] = {
-	"kevin","kelly","stephen","steven","mike","michael",
-	"joseph","murray","jesse","jessie","ronald","donald","joe",
-	"dean","kyle","chris","christian","scott","ravel","marcus"
-};
-
-std::string second_names[] = {
-	"howson","devine","divine","conway","penrose","peterson",
-	"morrison","gray","taylor","rice","kelly","clarkson","roger",
-	"snow","white","black","mitchell","merson","paulson",
-	"minx"
-};
 
 
 struct player
 {
+	std::string first_names[25] = {
+	"kevin","kelly","stephen","steven","mike",
+	"michael","joseph","murray","jesse","jessie",
+	"ronald","donald","joe","dean","kyle",
+	"chris","christian","scott","ravel","marcus",
+	"ethan","wade","riley","ivan","liam"
+	};
+
+	std::string second_names[20] = {
+		"howson","devine","divine","conway","penrose",
+		"peterson","morrison","gray","taylor","rice",
+		"kelly","clarkson","roger","snow","white",
+		"black","mitchell","merson","paulson","mannix"
+	};
+
+
 	std::string first_name;
 	std::string last_name;
+
+	player()
+	{
+
+	}
 
 	player(std::string first_name, std::string last_name)
 	{
@@ -32,8 +41,18 @@ struct player
 		this->last_name = last_name;
 	}
 
+	std::string display_name()
+	{
+		return first_name + " " + last_name;
+	}
+
 	static player generate_player() 
 	{
-		return player(first_names[uniform_dist(e1)], second_names[uniform_dist(e1)]);
+		player p;
+		//srand(time(NULL));
+		int f_n_index = rand() % 25;
+		//srand(time(NULL));
+		int l_n_index = rand() % 20;
+		return player(p.first_names[f_n_index], p.second_names[l_n_index]);
 	}
 };
