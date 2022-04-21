@@ -9,6 +9,8 @@ match::match(team home, team away)
 	this->away_corners = 0;
 	this->home_free_kicks = 0;
 	this->away_free_kicks = 0;
+	this->home_penalties = 0;
+	this->away_penalties = 0;
 	this->home_fouls = 0;
 	this->away_fouls = 0;
 	this->home_possesion = 0;
@@ -174,39 +176,41 @@ positions match::play_position(events current_event , events next_event)
 
 void match::show_squads()
 {
-	std::cout <<"\n"<< home.display_name() + "\t\t" + away.display_name() + "\n";
-	std::cout << "coach \t\t\t\t coach \n";
-	std::cout << home.players[0].display_name() + "\t\t\t" + away.players[0].display_name() + "\n";
-	std::cout << "players \t\t\t players\n";
+	std::cout <<"\n"<< home.display_name() + "\t\t\t\t\t" + away.display_name() + "\n";
+	std::cout << "coach \t\t\t\t\t\t\t coach \n";
+	std::cout << home.players[0].display_name() + "\t\t\t\t\t\t\t\t\t" + away.players[0].display_name() + "\n";
+	std::cout << "players \t\t\t\t\t\t\t\t\t players\n";
 	for (int i = 1; i < 12; i++)
 	{
-		std::cout <<i<<". " + home.players[i].display_name() + "\t\t\t" << i <<". " + away.players[i].display_name() + "\n\n";
+		std::cout <<i<<". " + home.players[i].display_name() + "\t\t\t\t\t\t" << i <<". " + away.players[i].display_name() + "\n\n";
 	}
 }
 
 void match::stats()
 {
-	std::cout <<"\n\t" + home.display_name() + "\t\t" + away.display_name() + "\n";
-	std::cout << "goals " << home_goals << "\t\t" << away_goals << "\n";
-	std::cout << "possession " << home_possesion << "\t\t" << away_possesion << "\n";
+	std::cout <<"\n\t\t\t" + home.display_name() + "\t\t\t\t" + away.display_name() + "\n";
+	std::cout << "goals " <<"\t\t\t" <<home_goals << "\t\t\t\t\t\t" << away_goals << "\n";
+	std::cout << "possession " <<"\t\t"<< home_possesion << "\t\t\t\t\t\t" << away_possesion << "\n";
 	//should probably be a variable
 	//integer division by zero also occurs
-	std::cout << "possession(%) " << (home_possesion / (home_possesion + away_possesion)) * 100 << "\t\t" << (away_possesion / (home_possesion + away_possesion)) * 100 << "\n";
-	std::cout << "shots " << home_shots << "\t\t" << away_shots << "\n";
-	std::cout << "fouls " << home_fouls << "\t\t" << away_fouls << "\n";
-	std::cout << "free kicks " << home_free_kicks << "\t\t" << away_free_kicks << "\n";
-	std::cout << "passes " << home_passes << "\t\t" << away_passes << "\n";
-	std::cout << "passes completed " << home_passes_completed << "\t\t" << away_passes_completed << "\n";
-	std::cout << "corners " << home_corners << "\t\t" << away_corners << "\n";
+	std::cout << "possession(%) " <<"\t\t"<< (home_possesion * 100 / (home_possesion + away_possesion)) << "\t\t\t\t\t\t" << (away_possesion * 100 / (home_possesion + away_possesion)) << "\n";
+	std::cout << "shots " <<"\t\t\t"<< home_shots << "\t\t\t\t\t\t" << away_shots << "\n";
+	std::cout << "fouls " <<"\t\t\t"<< home_fouls << "\t\t\t\t\t\t" << away_fouls << "\n";
+	std::cout << "free kicks " <<"\t\t"<< home_free_kicks << "\t\t\t\t\t\t" << away_free_kicks << "\n";
+	std::cout << "penalties " <<"\t\t"<< home_penalties << "\t\t\t\t\t\t" << away_penalties << "\n";
+	std::cout << "passes " <<"\t\t\t"<< home_passes << "\t\t\t\t\t\t" << away_passes << "\n";
+	std::cout << "passes completed " <<"\t"<< home_passes_completed << "\t\t\t\t\t\t" << away_passes_completed << "\n";
+	std::cout << "corners " <<"\t\t"<< home_corners << "\t\t\t\t\t\t" << away_corners << "\n";
 }
 
 void match::play()
 {
 	//srand(time(NULL));
 
-	while (game_time <= FULL_TIME )
+	while (game_time <= FULL_TIME * 5 )
 	{
-		if (game_time == HALF_TIME)
+		srand(rand() * time(0) * time(0));
+		if (game_time == HALF_TIME * 5)
 		{
 			current_event = PASS;
 			in_possesion = AWAY;
@@ -269,6 +273,7 @@ void match::play()
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
+				srand(rand() * time(0) * rand() * time(0));
 				acting = player_on_ball(position, home);
 				home_passes += 1;
 				home_passes_completed += 1;
@@ -377,12 +382,14 @@ void match::play()
 			if (in_possesion == HOME)
 			{
 				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " SHOOTS THE BALL\n";
+				home_penalties += 1;
+				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE PENALTY\n";
 			}
 			else
 			{
 				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " SHOOTS THE BALL\n";
+				away_penalties += 1;
+				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE PENALTY\n";
 			}
 			break;
 		case FREE_KICK:

@@ -43,7 +43,7 @@ struct team
 		this->suffix = suffix;
 		for (int i = 0; i < 12; i++)
 		{
-			//srand(time(NULL));
+			srand(rand() * time(0) * rand() * time(0));
 			players.emplace_back(player::generate_player());
 		}
 	}
@@ -51,11 +51,11 @@ struct team
 	static team generate_team()
 	{
 		team t;
-		//srand(time(NULL));
+		srand(rand() * time(0) * rand() * time(0));
 		int prefix_index = rand() % 6;
-		//srand(time(NULL));
+		srand(rand() * time(0) * rand() * time(0));
 		int name_index = rand() % 12;
-		//srand(time(NULL));
+		srand(rand() * time(0) * rand() * time(0));
 		int suffix_index = rand() % 3;
 
 		return team(t.prefixes[prefix_index], t.names[name_index], t.suffixes[suffix_index]);

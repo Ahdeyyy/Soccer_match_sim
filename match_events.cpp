@@ -6,15 +6,15 @@ events match_events::new_event(events current_events, int prob)
 		//0
 	case NONE:
 		
-		if (prob < 15)
+		if (prob < 5)
 		{
 			return INTERCEPT;
 		}
-		else if (prob < 35) 
+		else if (prob < 10) 
 		{
 			return TACKLE;
 		}
-		else if (prob < 55) 
+		else if (prob < 25) 
 		{
 			return SKILL;
 		}
@@ -25,11 +25,11 @@ events match_events::new_event(events current_events, int prob)
 
 		//1
 	case TACKLE:
-		if (prob < 45)
+		if (prob < 65)
 		{
 			return PASS;
 		}
-		else if (prob < 65) 
+		else if (prob < 85) 
 		{
 			return FOUL;
 		}
@@ -39,18 +39,14 @@ events match_events::new_event(events current_events, int prob)
 
 		//2
 	case INTERCEPT:
-		if (prob < 85)
-		{
 			return PASS;
-		}
-		return NONE;
 		break;
 
 
 		//3
 	case BLOCK:
 
-		if (prob < 45)
+		if (prob < 85)
 		{
 			return PASS;
 		}
@@ -65,11 +61,15 @@ events match_events::new_event(events current_events, int prob)
 		{
 			return INTERCEPT;
 		}
-		else if (prob < 50)
+		else if (prob < 40)
+		{
+			return TACKLE;
+		}
+		else if (prob < 85)
 		{
 			return PASS;
 		}
-		else if (prob < 80)
+		else if (prob < 95)
 		{
 			return SHOOT;
 		}
@@ -84,15 +84,15 @@ events match_events::new_event(events current_events, int prob)
 
 		//5
 	case SKILL:
-		if (prob < 20)
+		if (prob < 30)
 		{
 			return TACKLE;
 		}
-		else if (prob < 60)
+		else if (prob < 70)
 		{
 			return PASS;
 		}
-		else if (prob < 80)
+		else if (prob < 85)
 		{
 			return SKILL;
 		}
@@ -111,11 +111,11 @@ events match_events::new_event(events current_events, int prob)
 		{
 			return INTERCEPT;
 		}
-		else if (prob < 45) 
+		else if (prob < 55) 
 		{
 			return BLOCK;
 		}
-		else if (prob < 60)
+		else if (prob < 70)
 		{
 			return PASS;
 		}
@@ -156,7 +156,7 @@ events match_events::new_event(events current_events, int prob)
 		{
 			return SAVE;
 		}
-		else if (prob < 80)
+		else if (prob < 65)
 		{
 			return GOAL;
 		}

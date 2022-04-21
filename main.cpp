@@ -7,7 +7,7 @@
 
 int main() 
 {
-
+	
 	int away_goals = 0;
 	int home_goals = 0;
 	int time = 0;

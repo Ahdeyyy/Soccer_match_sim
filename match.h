@@ -32,6 +32,8 @@ private:
 	int away_corners;
 	int home_free_kicks;
 	int away_free_kicks;
+	int home_penalties;
+	int away_penalties;
 	int home_fouls;
 	int away_fouls;
 	int home_possesion;

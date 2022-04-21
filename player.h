@@ -2,7 +2,6 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include <random>
 #include <iostream>
 
 
@@ -49,9 +48,9 @@ struct player
 	static player generate_player() 
 	{
 		player p;
-		//srand(time(NULL));
+		srand(rand() * time(0) * rand() * time(0));
 		int f_n_index = rand() % 25;
-		//srand(time(NULL));
+		srand(rand() * time(0) * rand() * time(0));
 		int l_n_index = rand() % 20;
 		return player(p.first_names[f_n_index], p.second_names[l_n_index]);
 	}
