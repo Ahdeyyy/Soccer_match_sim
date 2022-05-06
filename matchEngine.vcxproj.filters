@@ -44,5 +44,8 @@
     <ClInclude Include="match.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

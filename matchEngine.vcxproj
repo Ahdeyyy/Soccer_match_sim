@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commentary.h" />
+    <ClInclude Include="headers.h" />
     <ClInclude Include="match.h" />
     <ClInclude Include="match_events.h" />
     <ClInclude Include="player.h" />

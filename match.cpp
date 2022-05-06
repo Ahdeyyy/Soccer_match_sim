@@ -30,6 +30,7 @@ match::match(team home, team away)
 
 	this->position = MID;
 	this->acting = home.players[9];
+	this->last_actor = home.players[9];
 
 	this->last_event = NONE;
 	this->current_event = PASS;
@@ -50,7 +51,7 @@ teams match::dispossess(teams in_possesion)
 	}
 }
 
-player match::player_on_ball(positions position , team in_possession)
+player match::player_with_ball(positions position , team in_possession)
 {
 	//srand(time(NULL));
 	int probability = rand() % 100;
@@ -218,128 +219,125 @@ void match::play()
 
 			std::cout << "\n HALF TIME \n\n";
 		}
-
+		comment = commentary::text(last_event, current_event, next_event, game_time, last_actor, acting);
+		if (comment != "") {
+			std::cout << "'" << (game_time / 5) << " " << comment;
+		};
 		switch (current_event)
 		{
 		case NONE:
-			//should rethink this not wise
-			std::cout << "break in play\n";
+			//should rethink , this not wise
+			
 			break;
 		case TACKLE:
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " SUCCESSFULLY TACKLES AND WINS THE BALL\n";
+				acting = player_with_ball(position, away);
 			}
 			else
 			{
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " SUCCESSFULLY TACKLES AND WINS THE BALL\n";
+				acting = player_with_ball(position, home);
+				
 			}
 			dispossess(in_possesion);
 			break;
 		case INTERCEPT:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, away);
+				acting = player_with_ball(position, away);
 				home_passes_completed -= 1;
-				std::cout << acting.first_name + " " + acting.last_name << " SUCCESSFULLY INTERCEPTS AND WINS THE BALL\n";
 			}
 			else
 			{
-				acting = player_on_ball(position, home);
+				acting = player_with_ball(position, home);
 				away_passes_completed -= 1;
-				std::cout << acting.first_name + " " + acting.last_name << " SUCCESSFULLY INTERCEPTS AND WINS THE BALL\n";
 			}
 			dispossess(in_possesion);
 			break;
 		case BLOCK:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " SUCCESSFULLY BLOCKS\n";
+				acting = player_with_ball(position, away);
 			}
 			else
 			{
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name +" " + acting.last_name << " SUCCESSFULLY BLOCKS\n";
+				acting = player_with_ball(position, home);
 			}
 			dispossess(in_possesion);
 			break;
 		case PASS:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
+				
 				srand(rand() * time(0) * rand() * time(0));
-				acting = player_on_ball(position, home);
+				acting = player_with_ball(position, home);
 				home_passes += 1;
 				home_passes_completed += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " PASSES THE BALL\n";
 			}
 			else
 			{
-				acting = player_on_ball(position, away);
+				acting = player_with_ball(position, away);
 				away_passes += 1;
 				away_passes_completed += 1;
-				std::cout << acting.first_name +" " + acting.last_name << " PASSES THE BALL\n";
 			}
 			break;
 		case CROSS:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " CROSSES THE BALL\n";
+				acting = player_with_ball(position, home);
 			}
 			else
 			{
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " CROSSES THE BALL\n";
+				acting = player_with_ball(position, away);
 			}
 			break;
 		case SHOOT:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, home);
+				acting = player_with_ball(position, home);
 				home_shots += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " SHOOTS THE BALL\n";
 			}
 			else
 			{
-				acting = player_on_ball(position, away);
+				acting = player_with_ball(position, away);
 				away_shots += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " SHOOTS THE BALL\n";
 			}
 			break;
 		case SAVE:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " SAVES THE SHOT\n";
+				/*acting = player_with_ball(position, away);*/
+				acting = away.players[1];
 			}
 			else
 			{
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " SAVES THE SHOT\n";
+				acting = player_with_ball(position, home);
 			}
 			dispossess(in_possesion);
 			break;
 		case SKILL:
+			last_actor = acting;
 			position = play_position(current_event, next_event);
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " PERFORMS A SKILL\n";
+				acting = player_with_ball(position, home);
 			}
 			else
 			{
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " PERFORMS A SKILL\n";
+				acting = player_with_ball(position, away);
 			}
 			break;
 		case FOUL:
@@ -349,12 +347,10 @@ void match::play()
 			if (in_possesion == HOME)
 			{
 				home_fouls += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " COMMITS A FOUL\n";
 			}
 			else
 			{
 				away_fouls += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " COMMITS A FOUL\n";
 			}
 			
 			break;
@@ -379,75 +375,68 @@ void match::play()
 			}
 			break;
 		case PENALTY:
+			last_actor = acting;
 			if (in_possesion == HOME)
 			{
-				acting = player_on_ball(position, home);
+				//acting = player_with_ball(position, home);
 				home_penalties += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE PENALTY\n";
 			}
 			else
 			{
-				acting = player_on_ball(position, away);
+				//acting = player_with_ball(position, away);
 				away_penalties += 1;
-				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE PENALTY\n";
 			}
 			break;
 		case FREE_KICK:
+			//last_actor = acting;
 			if (in_possesion == HOME)
 			{
 				home_free_kicks += 1;
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE FREEKICK\n";
+				acting = player_with_ball(position, home);
 			}
 			else
 			{
 				away_free_kicks += 1;
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE FREEKICK\n";
+				acting = player_with_ball(position, away);
 			}
 			break;
 		case CORNER:
+			last_actor = acting;
 			dispossess(in_possesion);
 			if (in_possesion == HOME)
 			{
 				home_corners += 1;
-				acting = player_on_ball(position, home);
-				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE CORNER KICK\n";
+				acting = player_with_ball(position, home);
 			}
 			else
 			{
 				away_corners += 1;
-				acting = player_on_ball(position, away);
-				std::cout << acting.first_name + " " + acting.last_name << " TO TAKE THE CORNER KICK\n";
+				acting = player_with_ball(position, away);
 			}
 			break;
 		case MISS:
 			if (in_possesion == HOME)
 			{
-				std::cout << acting.first_name + " " + acting.last_name << " MISSES THE SHOT\n";
 			}
 			else
 			{
-				std::cout << acting.first_name + " " + acting.last_name << " MISSES THE SHOT\n";
 			}
 			dispossess(in_possesion);
 			break;
 		case GOAL:
 			if (in_possesion == HOME)
 			{
-				std::cout << acting.first_name + " " + acting.last_name << " SCORES!!!!\n";
 				home_goals += 1;
 			}
 			else
 			{
-				std::cout << acting.first_name + " " + acting.last_name << " SCORES!!!!\n";
 				away_goals += 1;
 			}
 			dispossess(in_possesion);
 			break;
 
 		}
-
+		//last_actor = acting;
 		last_event = current_event;
 		current_event = next_event;
 		next_event = match_events::new_event(current_event, rand() % 100);

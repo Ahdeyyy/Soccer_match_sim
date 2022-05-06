@@ -1,4 +1,5 @@
 #include "match_events.h"
+
 events match_events::new_event(events current_events, int prob)
 {
 	switch (current_events)
@@ -201,18 +202,7 @@ events match_events::new_event(events current_events, int prob)
 		break;
 		//14
 	case PENALTY:
-		if (prob < 50) 
-		{
-			return GOAL;
-		}
-		else if(prob < 75)
-		{
-			return SAVE;
-		}
-		else
-		{
-			return MISS;
-		}
+		return SHOOT;
 
 		break;
 
